@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_tree/model/url_class.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UrlCard extends StatelessWidget {
-  const UrlCard({Key? key}) : super(key: key);
-  //TODO: add the class for the urlCard
+  const UrlCard({Key? key, required this.urlItem}) : super(key: key);
+  final UrlClass urlItem;
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +19,15 @@ class UrlCard extends StatelessWidget {
         ),
       ),
       child: TextButton(
-        //TODO: Implement open URl
-        onPressed: () {},
+        onPressed: () {
+          _launchURL(urlItem.url);
+        },
         child: Row(
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 16),
               child: FaIcon(
-                FontAwesomeIcons.twitch,
+                urlItem.icon,
                 color: Colors.cyan,
               ),
             ),
@@ -36,12 +39,13 @@ class UrlCard extends StatelessWidget {
               color: Colors.cyan.withOpacity(.5),
             ),
             Text(
-              "Twitch",
+              urlItem.label,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.cyan,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700),
+                color: Colors.cyan,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
             )
           ],
         ),
@@ -49,3 +53,6 @@ class UrlCard extends StatelessWidget {
     );
   }
 }
+
+void _launchURL(String _url) async =>
+    await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
