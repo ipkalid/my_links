@@ -4,8 +4,15 @@ import 'package:my_tree/model/url_class.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UrlCard extends StatelessWidget {
-  const UrlCard({Key? key, required this.urlItem}) : super(key: key);
+  const UrlCard(
+      {Key? key,
+      required this.urlItem,
+      this.isEditable = true,
+      this.deliteFunction})
+      : super(key: key);
   final UrlClass urlItem;
+  final isEditable;
+  final void Function()? deliteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +22,7 @@ class UrlCard extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 2,
-          color: Colors.cyan,
+          color: Colors.white,
         ),
       ),
       child: TextButton(
@@ -28,7 +35,7 @@ class UrlCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16),
               child: FaIcon(
                 urlItem.icon,
-                color: Colors.cyan,
+                color: Colors.white,
               ),
             ),
             VerticalDivider(
@@ -36,17 +43,27 @@ class UrlCard extends StatelessWidget {
               thickness: 2,
               indent: 8,
               endIndent: 8,
-              color: Colors.cyan.withOpacity(.5),
+              color: Colors.white.withOpacity(.5),
             ),
-            Text(
-              urlItem.label,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.cyan,
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
+            Expanded(
+              child: Text(
+                urlItem.label,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            )
+            ),
+            if (isEditable)
+              IconButton(
+                padding: EdgeInsets.all(0),
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
+                onPressed: deliteFunction,
+              ),
           ],
         ),
       ),

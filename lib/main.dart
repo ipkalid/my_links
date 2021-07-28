@@ -8,7 +8,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,40 +17,181 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("My Name"),
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool isEditMode = false;
+  List<UrlClass> links = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    links = [
+      UrlClass(
+        label: "FaceBook",
+        url: "https://www.facebook.com",
+        icon: FontAwesomeIcons.facebook,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            UrlCard(
-              urlItem: UrlClass(
-                label: "FaceBook",
-                url: "https://www.facebook.com",
-                icon: FontAwesomeIcons.facebook,
-              ),
-            ),
-            UrlCard(
-              urlItem: UrlClass(
-                label: "Twitter",
-                url: "https://www.Twitter.com",
-                icon: FontAwesomeIcons.twitter,
-              ),
-            ),
-            UrlCard(
-              urlItem: UrlClass(
-                label: "FaceBook",
-                url: "https://www.Instagram.com",
-                icon: FontAwesomeIcons.instagram,
-              ),
-            )
+      UrlClass(
+        label: "Twitter",
+        url: "https://www.Twitter.com",
+        icon: FontAwesomeIcons.twitter,
+      ),
+      UrlClass(
+        label: "Instagram",
+        url: "https://www.Instagram.com",
+        icon: FontAwesomeIcons.instagram,
+      ),
+      UrlClass(
+        label: "FaceBook",
+        url: "https://www.facebook.com",
+        icon: FontAwesomeIcons.facebook,
+      ),
+      UrlClass(
+        label: "Twitter",
+        url: "https://www.Twitter.com",
+        icon: FontAwesomeIcons.twitter,
+      ),
+      UrlClass(
+        label: "Instagram",
+        url: "https://www.Instagram.com",
+        icon: FontAwesomeIcons.instagram,
+      ),
+      UrlClass(
+        label: "FaceBook",
+        url: "https://www.facebook.com",
+        icon: FontAwesomeIcons.facebook,
+      ),
+      UrlClass(
+        label: "Twitter",
+        url: "https://www.Twitter.com",
+        icon: FontAwesomeIcons.twitter,
+      ),
+      UrlClass(
+        label: "Instagram",
+        url: "https://www.Instagram.com",
+        icon: FontAwesomeIcons.instagram,
+      ),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xffDA4453),
+            Color(0xffDF9CCC),
           ],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text("My Links"),
+          leading: (!isEditMode) ? Icon(Icons.share) : null,
+          actions: [
+            if (!isEditMode)
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  setState(() {
+                    isEditMode = !isEditMode;
+                  });
+                },
+              ),
+          ],
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage("s"),
+                    radius: 57,
+                  ),
+                  SizedBox(
+                    height: 13,
+                  ),
+                  Text(
+                    'User Name',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 13,
+                  ),
+                  Text(
+                    'Bio LAPLAPLAPLPALPAL LAPLAPLAPLPALPAL ‍💻 sd,nbfjsbdgjbdsjkg,sdm sndlsd',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 28,
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: links.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return UrlCard(
+                      urlItem: links[index],
+                      isEditable: isEditMode,
+                      deliteFunction: () {
+                        setState(() {
+                          links.removeAt(index);
+                        });
+                      },
+                    );
+                  },
+                ),
+              ),
+              if (isEditMode)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 64),
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: Size(233, 48),
+                      side: BorderSide(width: 2, color: Colors.white),
+                    ),
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(
+                        () {
+                          isEditMode = !isEditMode;
+                        },
+                      );
+                    },
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
