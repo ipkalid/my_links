@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_tree/screens/auth_screens/signin_screen.dart';
-
+import 'package:my_tree/widgets/text_field_design.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -71,14 +71,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 SizedBox(height: 32),
-                TextField(
+                TextFieldDesign(
                   controller: emailController,
+                  hintText: 'Enter Your Email',
+                  icon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: 24),
-                TextField(
+                TextFieldDesign(
                   controller: passwordController,
-                  keyboardType: TextInputType.visiblePassword,
+                  hintText: 'Enter Your Password',
+                  icon: Icons.password,
+                  obscureText: true,
                 ),
                 SizedBox(height: 64),
                 OutlinedButton(

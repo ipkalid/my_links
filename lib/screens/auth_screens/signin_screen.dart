@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_tree/screens/auth_screens/signup_screen.dart';
+import 'package:my_tree/widgets/text_field_design.dart';
 
 class SignInScreen extends StatefulWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -64,14 +65,18 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
                 SizedBox(height: 32),
-                TextField(
+                TextFieldDesign(
                   controller: emailController,
+                  hintText: 'Enter Your Email',
+                  icon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: 24),
-                TextField(
+                TextFieldDesign(
                   controller: passwordController,
-                  keyboardType: TextInputType.text,
+                  hintText: 'Enter Your Password',
+                  icon: Icons.password,
+                  obscureText: true,
                 ),
                 SizedBox(height: 64),
                 OutlinedButton(
@@ -88,7 +93,9 @@ class _SignInScreenState extends State<SignInScreen> {
                       color: Colors.white,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    print(emailController.text);
+                  },
                 ),
                 SizedBox(height: 16),
                 Row(
