@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_tree/main.dart';
 import 'package:my_tree/screens/auth_screens/signin_screen.dart';
+import 'package:my_tree/screens/home_screens/home_screen.dart';
 import 'package:my_tree/widgets/text_field_design.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -99,7 +102,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: Colors.white,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      await auth.createUserWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
+
+                      print('Log in.');
+
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyHomePage(),
+                        ),
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'weak-password') {
+                        print('The password provided is too weak.');
+                      } else if (e.code == 'email-already-in-use') {
+                        print('The account already exists for that email.');
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
                 ),
                 SizedBox(height: 16),
                 Row(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_tree/main.dart';
 import 'package:my_tree/model/url_class.dart';
+import 'package:my_tree/screens/auth_screens/signin_screen.dart';
 import 'package:my_tree/widgets/url_card.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -84,7 +86,20 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text("My Links"),
-          leading: (!isEditMode) ? Icon(Icons.share) : null,
+          leading: (!isEditMode)
+              ? IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () async {
+                    await auth.signOut();
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignInScreen(),
+                      ),
+                    );
+                  })
+              : null,
           actions: [
             if (!isEditMode)
               IconButton(
