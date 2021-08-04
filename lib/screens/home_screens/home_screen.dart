@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_tree/main.dart';
@@ -14,60 +16,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool isEditMode = false;
-  List<UrlClass> links = [];
+  User? user;
+
+  CollectionReference? collectionReference;
+  DocumentReference? userDocumentReference;
+
+  Future<DocumentSnapshot<Object?>>? data;
+
+  void getData() async {
+    user = auth.currentUser!;
+
+    collectionReference = firestore.collection('users');
+    userDocumentReference = collectionReference!.doc(user!.uid);
+
+    data = userDocumentReference!.get();
+  }
 
   @override
   void initState() {
     super.initState();
-
-
-    links = [
-      UrlClass(
-        label: "FaceBook",
-        url: "https://www.facebook.com",
-        icon: FontAwesomeIcons.facebook,
-      ),
-      UrlClass(
-        label: "Twitter",
-        url: "https://www.Twitter.com",
-        icon: FontAwesomeIcons.twitter,
-      ),
-      UrlClass(
-        label: "Instagram",
-        url: "https://www.Instagram.com",
-        icon: FontAwesomeIcons.instagram,
-      ),
-      UrlClass(
-        label: "FaceBook",
-        url: "https://www.facebook.com",
-        icon: FontAwesomeIcons.facebook,
-      ),
-      UrlClass(
-        label: "Twitter",
-        url: "https://www.Twitter.com",
-        icon: FontAwesomeIcons.twitter,
-      ),
-      UrlClass(
-        label: "Instagram",
-        url: "https://www.Instagram.com",
-        icon: FontAwesomeIcons.instagram,
-      ),
-      UrlClass(
-        label: "FaceBook",
-        url: "https://www.facebook.com",
-        icon: FontAwesomeIcons.facebook,
-      ),
-      UrlClass(
-        label: "Twitter",
-        url: "https://www.Twitter.com",
-        icon: FontAwesomeIcons.twitter,
-      ),
-      UrlClass(
-        label: "Instagram",
-        url: "https://www.Instagram.com",
-        icon: FontAwesomeIcons.instagram,
-      ),
-    ];
+    getData();
   }
 
   @override
@@ -121,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Column(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage("s"),
+                    //backgroundImage: NetworkImage(""),
                     radius: 57,
                   ),
                   SizedBox(
@@ -151,21 +119,49 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: links.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return UrlCard(
-                      urlItem: links[index],
-                      isEditable: isEditMode,
-                      deliteFunction: () {
-                        setState(() {
-                          links.removeAt(index);
-                        });
-                      },
+              FutureBuilder(
+                future: data,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var data = snapshot.data as DocumentSnapshot<Object?>;
+
+                    var links = data.get("links");
+
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: links.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return UrlCard(
+                            urlItem: UrlClass(
+                              label: links[index]['label'],
+                              url: links[index]['url'],
+                              icon: FontAwesomeIcons.table,
+                            ),
+                            isEditable: isEditMode,
+                            deliteFunction: () {
+                              // var temp = List.from(links);
+                              links.removeAt(index);
+                              userDocumentReference!
+                                  .update({'links': links}).then(
+                                (_) {
+                                  setState(() {
+                                    getData();
+                                  });
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
                     );
-                  },
-                ),
+                  } else if (snapshot.hasError) {
+                    return Container(
+                      child: Text("Error"),
+                    );
+                  }
+
+                  return CircularProgressIndicator();
+                },
               ),
               if (isEditMode)
                 Padding(

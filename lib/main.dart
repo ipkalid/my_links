@@ -1,12 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'package:my_tree/screens/auth_screens/signin_screen.dart';
 import 'package:my_tree/screens/auth_screens/signup_screen.dart';
 import 'package:my_tree/screens/home_screens/home_screen.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
+FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
