@@ -20,7 +20,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-
     links = [
       UrlClass(
         label: "FaceBook",
@@ -29,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       UrlClass(
         label: "Twitter",
-        url: "https://www.Twitter.com",
+        url: "https://www.Twitter.com/ikalhazmi",
         icon: FontAwesomeIcons.twitter,
       ),
       UrlClass(

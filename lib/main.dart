@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:my_tree/screens/auth_screens/signup_screen.dart';
 import 'package:my_tree/screens/home_screens/home_screen.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
+FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +19,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(auth.currentUser!.uid);
     return MaterialApp(
       title: 'Flutter 101',
       home: (auth.currentUser == null) ? SignUpScreen() : MyHomePage(),
