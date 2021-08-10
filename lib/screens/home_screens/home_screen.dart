@@ -21,7 +21,12 @@ class _MyHomePageState extends State<MyHomePage> {
   CollectionReference? collectionReference;
   DocumentReference? userDocumentReference;
 
+  TextEditingController linkLabelTextEditingController =
+      TextEditingController();
+  TextEditingController linkURLTextEditingController = TextEditingController();
+
   Future<DocumentSnapshot<Object?>>? data;
+  var links;
 
   void getData() async {
     user = auth.currentUser!;
@@ -125,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (snapshot.hasData) {
                     var data = snapshot.data as DocumentSnapshot<Object?>;
 
-                    var links = data.get("links");
+                    links = data.get("links");
 
                     return Expanded(
                       child: ListView.builder(
@@ -163,6 +168,78 @@ class _MyHomePageState extends State<MyHomePage> {
                   return CircularProgressIndicator();
                 },
               ),
+              if (isEditMode)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: Size(79, 48),
+                          side: BorderSide(width: 2, color: Colors.white),
+                        ),
+                        child: Text(
+                          "Add Link +",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Add Link'),
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      TextField(
+                                        controller:
+                                            linkLabelTextEditingController,
+                                        decoration:
+                                            InputDecoration(hintText: "Label"),
+                                      ),
+                                      TextField(
+                                        controller:
+                                            linkURLTextEditingController,
+                                        decoration:
+                                            InputDecoration(hintText: "URL"),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('Add +'),
+                                    onPressed: () {
+                                      links.add({
+                                        "label":
+                                            linkLabelTextEditingController.text,
+                                        "url": linkURLTextEditingController.text
+                                      });
+                                      userDocumentReference!
+                                          .update({'links': links}).then(
+                                        (_) {
+                                          setState(() {
+                                            getData();
+                                          });
+                                        },
+                                      );
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               if (isEditMode)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 64),

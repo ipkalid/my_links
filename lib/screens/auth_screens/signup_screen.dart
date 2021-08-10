@@ -109,7 +109,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         password: passwordController.text,
                       );
 
-                      print('Log in.');
+                      await firestore
+                          .collection('users')
+                          .doc(auth.currentUser!.uid)
+                          .set({"links": []});
 
                       Navigator.pop(context);
                       Navigator.push(
