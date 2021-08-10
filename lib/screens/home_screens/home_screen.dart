@@ -226,9 +226,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                           setState(() {
                                             getData();
                                           });
+                                          linkLabelTextEditingController.text =
+                                              "";
+                                          linkURLTextEditingController.text =
+                                              "";
+                                          Navigator.of(context).pop();
                                         },
                                       );
-                                      Navigator.of(context).pop();
                                     },
                                   ),
                                 ],
