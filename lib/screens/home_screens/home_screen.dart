@@ -192,48 +192,27 @@ class _MyHomePageState extends State<MyHomePage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Add Link'),
-                                content: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      TextField(
-                                        controller:
-                                            linkLabelTextEditingController,
-                                        decoration:
-                                            InputDecoration(hintText: "Label"),
-                                      ),
-                                      TextField(
-                                        controller:
-                                            linkURLTextEditingController,
-                                        decoration:
-                                            InputDecoration(hintText: "URL"),
-                                      ),
-                                    ],
-                                  ),
+                                title: Text("Add New Link"),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextField(
+                                      controller:
+                                          linkLabelTextEditingController,
+                                      decoration:
+                                          InputDecoration(hintText: "Label"),
+                                    ),
+                                    TextField(
+                                      controller: linkURLTextEditingController,
+                                      decoration:
+                                          InputDecoration(hintText: "URL"),
+                                    ),
+                                  ],
                                 ),
-                                actions: <Widget>[
+                                actions: [
                                   TextButton(
-                                    child: Text('Add +'),
-                                    onPressed: () {
-                                      links.add({
-                                        "label":
-                                            linkLabelTextEditingController.text,
-                                        "url": linkURLTextEditingController.text
-                                      });
-                                      userDocumentReference!
-                                          .update({'links': links}).then(
-                                        (_) {
-                                          setState(() {
-                                            getData();
-                                          });
-                                          linkLabelTextEditingController.text =
-                                              "";
-                                          linkURLTextEditingController.text =
-                                              "";
-                                          Navigator.of(context).pop();
-                                        },
-                                      );
-                                    },
+                                    onPressed: () {},
+                                    child: Text("Add +"),
                                   ),
                                 ],
                               );
