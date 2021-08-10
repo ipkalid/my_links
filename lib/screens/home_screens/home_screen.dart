@@ -211,7 +211,30 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 actions: [
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      links.add(
+                                        {
+                                          "label":
+                                              linkLabelTextEditingController
+                                                  .text,
+                                          "url":
+                                              linkURLTextEditingController.text
+                                        },
+                                      );
+                                      userDocumentReference!
+                                          .update({'links': links}).then(
+                                        (_) {
+                                          setState(() {
+                                            getData();
+                                          });
+                                          linkLabelTextEditingController.text =
+                                              "";
+                                          linkURLTextEditingController.text =
+                                              "";
+                                          Navigator.of(context).pop();
+                                        },
+                                      );
+                                    },
                                     child: Text("Add +"),
                                   ),
                                 ],
