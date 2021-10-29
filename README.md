@@ -1,16 +1,24 @@
-# my_tree
+# My Iinks
 
-A new Flutter project.
+Linktree clone build using Flutter and Firebase works on Android and iOS build for learning and training purposes.
+ 
+## Screenshots 
+image
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter application.
+### iOS
+Install [Flutter](https://flutter.dev/docs/get-started/install) and [Xcode](https://apps.apple.com/us/app/xcode/id497799835)
 
-A few resources to get you started if this is your first Flutter project:
+If you face a problem in installing pods you just need to these command lines 
+- remove pods folder inside iOS Folder `ios/pods`
+- remove Podfile.lock file inside iOS Folder `ios/Podfile.lock`
+- inside iOS Folder type this in the command line `pod install`
+- in the Flutter Project folder type this in the command line `flutter run`
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Android
+Install [Flutter](https://flutter.dev/docs/get-started/install) and [Android Studio](https://developer.android.com/studio)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
