@@ -3,7 +3,11 @@
 Linktree clone build using Flutter and Firebase works on Android and iOS build for learning and training purposes.
  
 ## Screenshots 
-image
+
+Login Screen             |  Home Screen
+:-------------------------:|:-------------------------:
+<img src="https://raw.githubusercontent.com/ipkalid/my_links/master/login.png" alt="home_screen" width="200"/>  | <img src="https://raw.githubusercontent.com/ipkalid/my_links/master/main.png" alt="home_screen" width="200"/>
+
 
 ## Installation
 
